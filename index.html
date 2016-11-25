@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html,
+      body {
+        font-family: Arial, sans-serif;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      input {
+        font-size: 12px;
+      }
+      a#menu svg {
+        width: 40px;
+        fill: #000;
+        z-index: 9999;
+         position: absolute;
+      }
+
+      nav, main {
+        box-sizing: border-box;
+      }
+
+   h1 {
+        color: #525454;
+        font-size: 22px;
+        margin: 0 0 10px 0;
+        text-align: center;
+      }
+      main {
+        width: 100%;
+        height: 100%;
+      }
+
+      #map {
+        bottom:0px;
+        height: 100%;
+        left :0px;
+        position: relative;
+        right: 0px;
+      }
+
+      h1 {
+        color: #525454;
+        font-size: 22px;
+        margin: 0 0 10px 0;
+        text-align: center;
+        background-color:  #c2c2a3;
+      }
+
+
+      nav {
+        background-image: url("images/new.jpg");
+        border: 1px solid #999;
+        border-radius: 3px;
+        height: 100%;
+        z-index:9999;
+        line-height: 35px;
+        padding: 10px 10px 30px 10px;
+        text-align: left;
+        width: 340px;
+        position: absolute;
+        -webkit-transform: translate(-400px, 0);
+        transform: translate(-400px, 0);
+        /* Optionally, we animate the drawer. */
+        transition: transform 0.3s ease;
+      }
+
+      nav.open {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+      }
+
+      .list-box:hover {
+        width: 100%;
+        height: 5%;
+        background: #80aaff;
+        color: white;
+        border: 1px solid #999;
+        border-radius: 3px;
+
+      }
+
+      #wikiInfo {
+        color: #4966bc;
+        border:1px dashed black;
+        font-size: 150%;
+
+      }
+
+      @media screen and (min-width: 600px) {
+
+        /* We open the drawer. */
+        nav {
+          position:relative;
+          -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+
+        }
+
+        /* We use Flexbox on the parent. */
+        body {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+        }
+
+        main {
+          width: auto;
+          /* Flex-grow streches the main content to fill all available space. */
+          flex-grow: 1;
+        }
+      }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+      <nav class="options-box">
+        <h1>Incredible North India</h1>
+        <input placeholder="Search…" type="search" name="q" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" style="width:100%;height:3%;border-radius:3px;">
+        <ul data-bind="foreach: obserTitle">
+            <li class="list-box" data-bind="click: $parent.showDetails , text: $data"></li>
+        </ul>
+        </br>
+        <h2>wiki Info</h2>
+        <div id="wikiInfo" data-bind="text: wikiInfo"></div>
+      </nav>
+      <main>
+      <a id="menu">
+       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"></path>
+        </svg>
+      </a>
+      <div id="map">
+      </div>
+      </main>
+    <script>
+         /*
+       * Open the drawer when the menu ison is clicked.
+       */
+      var menu = document.querySelector('#menu');
+      var main = document.querySelector('#map');
+      var drawer = document.querySelector('.options-box');
+
+      menu.addEventListener('click', function(e) {
+        drawer.classList.toggle('open');
+        e.stopPropagation();
+      });
+      main.addEventListener('click', function() {
+        drawer.classList.remove('open');
+      });
+    </script>
+    <script type='text/javascript' src='js/knockout-3.4.1.js'></script>
+    <script type='text/javascript' src='js/libs/jquery.min.js'></script>
+    <script type='text/javascript' src='js/viewmodel.js'></script>
+    <script async defer
+        src=
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJtUNcHqnnlud1VSneM6eWYAjBRWzEf1k&v=3&callback=initMap" onerror="googleError()">
+    </script>
+  </body>
+</html>
